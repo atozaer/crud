@@ -24,9 +24,7 @@ public class MemberServiceImpl implements MemberService{
     public boolean memberLogin(String email, String passwd) {
         boolean result = false;
 
-        if (memberRepository.findByEmailAndPasswd(email, passwd)) {
-            result = true;
-        }
+        memberRepository.findByEmailAndPasswd(email, passwd);
 
         return result;
     }

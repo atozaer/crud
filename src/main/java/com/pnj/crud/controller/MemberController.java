@@ -1,5 +1,6 @@
 package com.pnj.crud.controller;
 
+import com.pnj.crud.dto.JoinDto;
 import com.pnj.crud.entity.Member;
 import com.pnj.crud.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,9 @@ public class MemberController {
     @PostMapping("/signup")
     public String postSignUp(Member member) {
         String resultPage = "views/index";
+
         System.out.println(member);
+
         memberService.signup(member);
 
         return resultPage;
@@ -38,10 +41,8 @@ public class MemberController {
     @PostMapping("/signin")
     public String postLogin(String email, String passwd) {
         String returnPage = "views/index";
-
-        if (memberService.memberLogin(email,passwd)) {
-            returnPage = "views/member/info";
-        }
+        System.out.println(memberService.memberLogin(email, passwd));
+        memberService.memberLogin(email, passwd);
 
         return returnPage;
     }

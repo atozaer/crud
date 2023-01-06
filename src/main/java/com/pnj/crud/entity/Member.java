@@ -1,21 +1,37 @@
 package com.pnj.crud.entity;
 
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
-
-@Entity
 @Data
+@ToString
+@RequiredArgsConstructor
+@DynamicInsert
+@DynamicUpdate
+@AllArgsConstructor
+@Builder
+@Table(name = "Member")
+@Entity
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long mno;
+    Long mno;
     String email;
     String passwd;
     String uname;
     String mobile;
     String regDate;
     String modifyDate;
+
+
+    @Builder
+    public Member(Long mno, String email, String passwd) {
+        this.mno = mno;
+        this.email = email;
+        this.passwd = passwd;
+    }
 }

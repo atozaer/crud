@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    boolean findByEmailAndPasswd(String email, String passwd);
+    Member findByEmailAndPasswd(String email, String passwd);
 }

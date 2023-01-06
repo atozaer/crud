@@ -3,25 +3,49 @@
       layout:decorate="~{views/fragments/layout}">
 
 <th:block layout:fragment="main">
-    <form>
-        <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-        <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+    <div class="container">
+        <div class="input-form-backgroud row">
+            <div class="input-form col-md-12 mx-auto">
+                <h4 class="mb-3">회원가입</h4>
+                <form class="signup-form" method="post">
+                    <div class="mb-3">
+                        <label for="email">이메일</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com"
+                               required>
+                        <div class="invalid-feedback">
+                            이메일을 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwd">비밀번호</label>
+                        <input type="password" class="form-control" id="passwd" name="passwd"
+                               placeholder="영문+숫자+기호 형식의 8~30자리" required>
+                        <div class="invalid-feedback">
+                            비밀번호를 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="uname">이름</label>
+                            <input type="text" class="form-control" id="uname" name="uname" placeholder="이름을 입력해주세요."
+                                   value="" required>
+                            <div class="invalid-feedback">
+                                이름을 입력해주세요.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mobile">전화번호<span class="text-muted">&nbsp;(필수 아님)</span></label>
+                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="전화번호를 입력해주세요.">
+                    </div>
+                    <hr class="mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="aggrement">
+                        <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+                </form>
+            </div>
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-        </div>
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">© 2017–2022</p>
-    </form>
+    </div>
 </th:block>
