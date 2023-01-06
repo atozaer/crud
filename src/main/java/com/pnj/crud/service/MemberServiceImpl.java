@@ -5,6 +5,8 @@ import com.pnj.crud.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -24,6 +26,11 @@ public class MemberServiceImpl implements MemberService {
     public Long isLogin(String email, String passwd) {
 
         return memberRepository.findByEmailAndPasswd(email, passwd).getMno();
+    }
+
+    @Override
+    public List<Member> findAllUser() {
+        return memberRepository.findAll();
     }
 
     @Override

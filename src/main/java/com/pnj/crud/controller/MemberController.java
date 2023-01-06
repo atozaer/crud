@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpSession;
+import java.lang.management.MemoryNotificationInfo;
 
 @Controller
 @RequestMapping("member")
@@ -54,7 +56,7 @@ public class MemberController {
         if (isLogin > 0) {
             Member member = memberService.memberLogin(isLogin);
             session.setAttribute("member", member);
-            returnPage = "views/member/info";
+            returnPage = "redirect:/";
         } else {
             System.out.println("로그인실패");
         }
@@ -63,8 +65,10 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public ModelAndView getInfo(HttpSession session) {
-        ModelAndView mv = null;
+    public ModelAndView getInfo(
+            HttpSession session
+    ) {
+        ModelAndView mv = new ModelAndView();
 
         if (session != null) {
             mv.setViewName("views/member/info");
@@ -79,11 +83,20 @@ public class MemberController {
 
         return mv;
     }
+    @GetMapping("/reports")
+    public ModelAndView getReports(
+            ModelAndView mv
+    ) {
+        mv.setViewName("views/member/reports");
 
+        return mv;
+    }
     @GetMapping("/logout")
     public String getLogout(HttpSession session) {
         session.invalidate();
 
         return "redirect:/";
     }
+
+
 }
