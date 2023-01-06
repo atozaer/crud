@@ -17,11 +17,22 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    <!--  Modal  -->
     const myModal = document.getElementById('exampleModal')
     const myInput = document.getElementById('exampleInputEmail1')
 
     myModal.addEventListener('shown.bs.modal', () => {
         myInput.focus()
     })
+
+    const loginbtn = document.querySelector("#login-btn")
+    const loginfrm = document.querySelector("#login-frm")
+    loginbtn.addEventListener("click", ()=>{
+        loginfrm.method = "post";
+        loginfrm.submit();
+    })
+
+
+
 </script>
 </html>

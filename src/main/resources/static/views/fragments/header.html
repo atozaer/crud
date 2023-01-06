@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="header">
-
     <div class="px-3 py-2 text-bg-dark">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -29,7 +28,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="/member/info" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                 <use xlink:href="#table"></use>
                             </svg>
@@ -59,12 +58,16 @@
     <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-center">
             <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search"/>
             </form>
-
-            <div class="text-end">
-                <button type="button" class="btn btn-light text-dark me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
-                <button type="button" class="btn btn-primary">Sign-up</button>
+            <div th:if="${session.isEmpty()}" class="text-end">
+                <button type="button" class="btn btn-light text-dark me-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">로그인
+                </button>
+                <button type="button" class="btn btn-primary">회원가입</button>
+            </div>
+            <div th:unless="${session.isEmpty()}" class="text-end">
+                <a class="btn btn-primary" href="/member/logout" role="button">로그아웃</a>
             </div>
         </div>
     </div>

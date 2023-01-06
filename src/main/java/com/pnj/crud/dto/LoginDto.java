@@ -19,5 +19,4 @@ public class LoginDto{
     private Long mno;
     private String email;
     private String passwd;
-
 }

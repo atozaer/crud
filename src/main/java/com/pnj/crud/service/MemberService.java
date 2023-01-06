@@ -5,5 +5,7 @@ import com.pnj.crud.entity.Member;
 public interface MemberService {
     Member signup(Member member);
 
-    boolean memberLogin(String email, String passwd);
+    Member memberLogin(long isLogin);
+
+    Long isLogin(String email, String passwd);
 }

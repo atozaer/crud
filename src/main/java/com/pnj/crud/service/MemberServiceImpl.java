@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private final MemberRepository memberRepository;
@@ -21,12 +21,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public boolean memberLogin(String email, String passwd) {
-        boolean result = false;
+    public Long isLogin(String email, String passwd) {
 
-        memberRepository.findByEmailAndPasswd(email, passwd);
+        return memberRepository.findByEmailAndPasswd(email, passwd).getMno();
+    }
 
-        return result;
+    @Override
+    public Member memberLogin(long isLogin) {
+
+        return memberRepository.findById(isLogin).get();
     }
 
 }
