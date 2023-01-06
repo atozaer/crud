@@ -4,12 +4,24 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>CRUD 만들기</title>
+
 </head>
 <body class="g-sidenav-show bg-gray-100">
+<th:block th:replace="views/fragments/login :: login"></th:block>
 <th:block th:replace="views/fragments/header :: header"></th:block>
 <th:block layout:fragment="main"></th:block>
 <th:block th:replace="views/fragments/footer :: footer"></th:block>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const myModal = document.getElementById('exampleModal')
+    const myInput = document.getElementById('exampleInputEmail1')
+
+    myModal.addEventListener('shown.bs.modal', () => {
+        myInput.focus()
+    })
+</script>
 </html>
