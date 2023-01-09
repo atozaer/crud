@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{views/fragments/layout}">
+
+<th:block layout:fragment="main">
+    <div class="container w-50 p-3">
+        <h1>회원정보 수정</h1>
+        <p>
+        <hr>
+        </p>
+        <form class="modify-frm" method="post">
+            <div class="mb-3 row">
+                <label for="email" class="col-sm-2 col-form-label">이메일</label>
+                <div class="col-sm-4">
+                    <input type="hidden" class="form-control-plaintext" name="mno" readonly th:value="${member.mno}">
+                    <input type="text" class="form-control-plaintext" id="email" name="email" readonly th:value="${member.email}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="uname" class="col-sm-2 col-form-label">이름</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="uname" name="uname" th:value="${member.uname}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="mobile" class="col-sm-2 col-form-label">전화번호</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="mobile" name="mobile" th:value="${member.mobile}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="regDate" class="col-sm-2 col-form-label">가입일</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control-plaintext" id="regDate" name="regDate" readonly th:value="${member.regDate}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="modifyDate" class="col-sm-2 col-form-label">정보수정일</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control-plaintext" id="modifyDate" name="modifyDate" readonly th:value="${member.modifyDate}">
+                </div>
+            </div>
+            <hr>
+            <button type="submit" id="modfify-btn" class="btn btn-primary">정보 수정하기</button>
+        </form>
+    </div>
+    <script>
+        const modifybtn = document.querySelector("#modfify-btn")
+
+        modifybtn.addEventListener("click", ()=>{
+            console.log("111")
+        })
+    </script>
+</th:block>

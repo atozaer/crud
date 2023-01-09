@@ -14,7 +14,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @AllArgsConstructor
 @Builder
-@Table(name = "Member")
+@Table(name = "member")
 @Entity
 public class Member {
     @Id
@@ -26,6 +26,7 @@ public class Member {
     String mobile;
     String regDate;
     String modifyDate;
+    String isDelete;
 
 
     @Builder

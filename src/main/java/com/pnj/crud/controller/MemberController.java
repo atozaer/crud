@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.crypto.ExemptionMechanism;
 import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpSession;
 import java.lang.management.MemoryNotificationInfo;
@@ -28,33 +29,32 @@ public class MemberController {
     }
 
     @GetMapping("/signup")
-    public String getSignUp() {
+    public String getSignUp(HttpSession session) {
+        String returnPage = "views/member/signup";
 
-        return "views/member/signup";
+        if (session.getAttribute("member") != null) {
+
+            returnPage = "views/member/info";
+        }
+
+        return returnPage;
     }
 
     @PostMapping("/signup")
     public String postSignUp(Member member) {
-        String resultPage = "views/index";
-
-        System.out.println(member);
-
         memberService.signup(member);
 
-        return resultPage;
+        return "views/index";
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public String postLogin(LoginDto loginMember, HttpSession session) {
         String returnPage = "views/index";
 
         System.out.println(loginMember);
 
-        long isLogin = memberService.isLogin(loginMember.getEmail(), loginMember.getPasswd());
-        System.out.println("mno : " + isLogin);
-
-        if (isLogin > 0) {
-            Member member = memberService.memberLogin(isLogin);
+        Member member = memberService.memberLogin(loginMember.getEmail(), loginMember.getPasswd());
+        if (member != null) {
             session.setAttribute("member", member);
             returnPage = "redirect:/";
         } else {
@@ -65,32 +65,77 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public ModelAndView getInfo(
-            HttpSession session
-    ) {
-        ModelAndView mv = new ModelAndView();
+    public String getInfo(HttpSession session) {
+        String returnPage = "views/index";
 
-        if (session != null) {
-            mv.setViewName("views/member/info");
+        if (session.getAttribute("member") != null) {
             Member member = (Member) session.getAttribute("member");
 
-            System.out.println(member);
-            mv.addObject("member", member);
-
+            returnPage = "views/member/info";
         } else {
-            mv.setViewName("views/index");
+            returnPage = "views/member/signup";
         }
 
-        return mv;
+        return returnPage;
     }
-    @GetMapping("/reports")
-    public ModelAndView getReports(
-            ModelAndView mv
-    ) {
-        mv.setViewName("views/member/reports");
 
-        return mv;
+    @GetMapping("/modify")
+    public String getModify(HttpSession session, Model model) {
+
+        Member member = (Member) session.getAttribute("member");
+
+        model.addAttribute("member", member);
+
+        return "views/member/modify";
     }
+
+    @PostMapping("/modify")
+    public String postModify(HttpSession session, Member member, Model model) {
+
+        System.out.println("controller : " + member);
+
+        memberService.update(member);
+
+        Member modifyMember = memberService.findById(member.getMno()).get();
+
+        model.addAttribute("member", modifyMember);
+
+        session.setAttribute("member", modifyMember);
+
+        return "views/member/info";
+    }
+
+    @GetMapping("/mlist")
+    public String getMlist() {
+
+        return "views/member/mlist";
+    }
+
+    @GetMapping("/deletelist")
+    public String getDlist() {
+
+        return "views/member/deletelist";
+    }
+
+    @GetMapping("/delete")
+    public String getDelete(HttpSession session, Model model) {
+
+        Member member = (Member) session.getAttribute("member");
+
+        model.addAttribute("member", member);
+
+        return "views/member/delete";
+    }
+
+    @PostMapping("/delete")
+    public String postDelete(HttpSession session, Long mno, String passwd) {
+
+        memberService.delete(mno, passwd);
+
+        session.invalidate();
+        return "views/index";
+    }
+
     @GetMapping("/logout")
     public String getLogout(HttpSession session) {
         session.invalidate();

@@ -2,16 +2,23 @@ package com.pnj.crud.service;
 
 import com.pnj.crud.entity.Member;
 import com.pnj.crud.repository.MemberRepository;
+import com.pnj.crud.repository.MemberRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.lang.annotation.ElementType;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private final MemberRepository memberRepository;
+
+    @Autowired
+    private MemberRepositoryCustom memberRepositoryCustom;
 
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -21,22 +28,43 @@ public class MemberServiceImpl implements MemberService {
     public Member signup(Member member) {
         return memberRepository.save(member);
     }
-
     @Override
-    public Long isLogin(String email, String passwd) {
+    public Member memberLogin(String email, String passwd) {
 
-        return memberRepository.findByEmailAndPasswd(email, passwd).getMno();
+        return memberRepository.findByEmailAndPasswdAndIsDelete(email, passwd, "n");
     }
 
     @Override
-    public List<Member> findAllUser() {
-        return memberRepository.findAll();
+    public List<Member> findMemberList() {
+
+        return memberRepository.findAllByIsDelete("n");
     }
 
     @Override
-    public Member memberLogin(long isLogin) {
+    public List<Member> findDeleteList() {
 
-        return memberRepository.findById(isLogin).get();
+        return memberRepository.findAllByIsDelete("y");
     }
+
+
+    @Override
+    public Member update(Member member) {
+        memberRepositoryCustom.update(member);
+        return null;
+    }
+
+    @Override
+    public Optional<Member> findById(Long mno) {
+        System.out.println("findById service : "+memberRepository.findById(mno));
+        return memberRepository.findById(mno);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long mno, String passwd) {
+        memberRepository.isDelete(mno, passwd);
+    }
+
+
 
 }

@@ -3,10 +3,11 @@
       layout:decorate="~{views/fragments/layout}">
 
 <th:block layout:fragment="main">
-    <div class="container">
+    <div class="container w-25 p-3">
         <div class="input-form-backgroud row">
             <div class="input-form col-md-12 mx-auto">
                 <h4 class="mb-3">회원가입</h4>
+                <hr>
                 <form class="signup-form" method="post">
                     <div class="mb-3">
                         <label for="email">이메일</label>
@@ -25,7 +26,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col mb-3">
                             <label for="uname">이름</label>
                             <input type="text" class="form-control" id="uname" name="uname" placeholder="이름을 입력해주세요."
                                    value="" required>
@@ -38,7 +39,7 @@
                         <label for="mobile">전화번호<span class="text-muted">&nbsp;(필수 아님)</span></label>
                         <input type="text" class="form-control" id="mobile" name="mobile" placeholder="전화번호를 입력해주세요.">
                     </div>
-                    <hr class="mb-4">
+                    <hr>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="aggrement">
                         <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>

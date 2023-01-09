@@ -17,9 +17,15 @@ public class MemberRestController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/ulist")
-    public List<Member> getUserList() {
+    @GetMapping("/mlist")
+    public List<Member> getMemberList() {
 
-        return memberService.findAllUser();
+        return memberService.findMemberList();
+    }
+
+    @GetMapping("/dlist")
+    public List<Member> getDeleteList() {
+
+        return memberService.findDeleteList();
     }
 }

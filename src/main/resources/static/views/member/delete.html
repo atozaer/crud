@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{views/fragments/layout}">
+
+<th:block layout:fragment="main">
+    <div class="container w-50 p-3">
+        <h1>회원탈퇴</h1>
+        <p>
+        <hr>
+        </p>
+        <form class="delete-frm" method="post">
+            <div class="mb-3 row">
+                <label for="passwd" class="col-sm-2 col-form-label">비밀번호 확인</label>
+                <div class="col-sm-4">
+                    <input type="hidden" class="form-control" name="mno" readonly th:value="${member.mno}">
+                    <input type="password" class="form-control" id="passwd" name="passwd">
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-danger text-light me-2 delete-btn">회원탈퇴</button>
+        </form>
+    </div>
+</th:block>

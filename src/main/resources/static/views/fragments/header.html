@@ -12,7 +12,7 @@
 
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                     <li>
-                        <a href="#" class="nav-link text-secondary">
+                        <a href="/" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                 <use xlink:href="#home"></use>
                             </svg>
@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/member/reports" class="nav-link text-white">
+                        <a href="/member/mlist" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                 <use xlink:href="#grid"></use>
                             </svg>
@@ -44,11 +44,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="/member/deletelist" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                <use xlink:href="#people-circle"></use>
+                               가 <use xlink:href="#people-circle"></use>
                             </svg>
-                            XX
+                            탈퇴회원목록
                         </a>
                     </li>
                 </ul>
@@ -64,7 +64,7 @@
                 <button type="button" class="btn btn-light text-dark me-2" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">로그인
                 </button>
-                <button type="button" class="btn btn-primary">회원가입</button>
+                <a href="/member/signup" class="btn btn-primary" role="button">회원가입</a>
             </div>
             <div th:unless="${session.isEmpty()}" class="text-end">
                 <a class="btn btn-primary" href="/member/logout" role="button">로그아웃</a>
