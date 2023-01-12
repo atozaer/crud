@@ -1,22 +1,15 @@
-package com.pnj.crud.controller;
+package com.pnj.crud.controller.member;
 
-import com.pnj.crud.dto.JoinDto;
-import com.pnj.crud.dto.LoginDto;
+import com.pnj.crud.dto.member.LoginDto;
 import com.pnj.crud.entity.Member;
-import com.pnj.crud.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pnj.crud.service.member.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.crypto.ExemptionMechanism;
-import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpSession;
-import java.lang.management.MemoryNotificationInfo;
 
 @Controller
 @RequestMapping("member")

@@ -1,4 +1,4 @@
-package com.pnj.crud.dto;
+package com.pnj.crud.dto.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

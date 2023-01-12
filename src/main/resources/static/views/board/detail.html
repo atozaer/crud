@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{views/fragments/layout}">
+
+<th:block layout:fragment="main">
+    <div class="container w-75 p-3">
+        <h1>글 상세보기</h1>
+        <p>
+        <hr>
+        </p>
+        <div class="mb-3 row">
+            <label for="bTitle" class="col-sm-2 col-form-label">제목</label>
+            <div class="col-sm-5">
+                <input type="hidden" data-b-no="bNo" th:value="${board.bNo}"/>
+                <input th:value="${board.bTitle}" type="text" class="form-control-plaintext" id="bTitle" name="bTitle"
+                       placeholder="제목을 입력하세요"/>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="bWriter" class="col-sm-2 col-form-label">작성자</label>
+            <div class="col-sm-10">
+                <input th:value="${board.bWriter}" type="text" readonly class="form-control-plaintext" id="bWriter"
+                       name="bWriter"/>
+            </div>
+        </div>
+        <!--            <div class="mb-3 row">-->
+        <!--                <label for="images" class="col-sm-2 col-form-label"> 이미지 </label>-->
+        <!--                <div class="col-sm-5">-->
+        <!--                    <input type="file" class="form-control" name="images" id="images" placeholder="이미지 첨부" multiple accept="image/*">-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <div class="mb-3 row">
+            <label for="bContent" class="col-sm-2 col-form-label">내용</label>
+            <div class="col-sm-10">
+                <textarea th:text="${board.bContent}" class="form-control-plaintext border rounded" name="bContent"
+                          id="bContent" cols="30" rows="10" readonly></textarea>
+            </div>
+        </div>
+        <div class="text-end">
+            <a class="btn btn-primary text-light me-2" href="/board/list">목록</a>
+            <a class="btn btn-danger text-light me-2" id="modify-btn" th:href="${'/board/'+board.bNo+'/modify'}">글 수정</a>
+            <a th:if="${board.bNo != board.bRef}" class="btn btn-secondary text-light me-2"
+               th:href="${'/board/'+board.bRef+'/detail'}">원글보기</a>
+            <a class="btn btn-success text-light me-2" href="/board/list">답글쓰기</a>
+            <!--            <button type="submit" class="btn btn-primary">글 등록</button>-->
+        </div>
+        <!--    댓글    -->
+        <hr>
+        <div class="card mb-2">
+            <div class="card-header bg-light">
+                <i class="fa fa-comment fa"></i> COMMENTS
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="form-inline mb-3 row w-100">
+                            <div class="col-sm-3 col-sm-6">
+                                <label for="commentsId" class="col"><i class="bi bi-person-circle fs-3"></i></label>
+                                <input type="text" class="form-control col-sm-3" placeholder="Enter yourId"
+                                       id="commentsId"/>
+                            </div>
+                            <div class="col-sm-3 col-sm-6">
+                                <label for="commentsPassword" class="col"><i class="bi bi-unlock-fill fs-3"></i></label>
+                                <input type="password" class="form-control col-sm-3" placeholder="Enter password"
+                                       id="commentsPassword"/>
+                            </div>
+                        </div>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" s></textarea>
+                        <button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">post comments
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>

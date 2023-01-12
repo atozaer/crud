@@ -1,13 +1,12 @@
-package com.pnj.crud.service;
+package com.pnj.crud.service.member;
 
 import com.pnj.crud.entity.Member;
-import com.pnj.crud.repository.MemberRepository;
-import com.pnj.crud.repository.MemberRepositoryCustom;
+import com.pnj.crud.repository.member.MemberRepository;
+import com.pnj.crud.repository.member.MemberRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.annotation.ElementType;
 import java.util.List;
 import java.util.Optional;
 

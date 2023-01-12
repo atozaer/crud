@@ -1,4 +1,4 @@
-package com.pnj.crud.repository;
+package com.pnj.crud.repository.member;
 
 import com.pnj.crud.entity.Member;
 

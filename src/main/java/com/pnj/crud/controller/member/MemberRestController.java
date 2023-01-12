@@ -1,7 +1,7 @@
-package com.pnj.crud.controller;
+package com.pnj.crud.controller.member;
 
 import com.pnj.crud.entity.Member;
-import com.pnj.crud.service.MemberService;
+import com.pnj.crud.service.member.MemberService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

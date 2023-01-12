@@ -17,7 +17,7 @@ class Pagination {
         this._pageLimit = pageLimit;
         this._url = url;
         this._searchParams = searchParams;
-
+        console.log(this._totalCount, this._pageSize);
         this._lastPage = Math.ceil(this._totalCount / this._pageSize);
         this._block = Math.ceil(this._current / this._pageLimit);
         this._start = ((this._block - 1) * this._pageLimit) + 1;
@@ -27,7 +27,7 @@ class Pagination {
     }
 
     setPageLink = (pageNumber) => {
-        this._searchParams['pageNo'] = pageNumber;
+        this._searchParams['page'] = pageNumber;
         return `${this._url}?${Object.entries(this._searchParams).map(e => e.join("=")).join('&')}`;
     }
 
@@ -36,40 +36,37 @@ class Pagination {
 
         if (this._start > 1) {
             paginationList.push(
-                `<li><a href="${this.setPageLink(1)}"><i class="fa fa-angle-double-left"></i></a></li>`
+                `<li class="page-arrow" onclick="location.href='${this.setPageLink(1)}'"><img height="11px" src="/img/common/svgs/solid/angles-left.svg"></li>`
             );
         }
         if (1 < this._current) {
             paginationList.push(
-                `<li><a href="${this.setPageLink(this._current - 1)}"><i class="fa fa-angle-left"></i></a></li>`
+                `<li class="page-arrow" onclick="location.href='${this.setPageLink(this._current - 1)}'"><img height="11px" src="/img/common/svgs/solid/angle-left.svg"></li>`
             );
         }
 
         for (let i = this._start; i <= this._end; i++) {
             let currentPageClass = "";
-            if (this._current == i) currentPageClass = "active";
+            if (this._current == i) currentPageClass = "current-page";
             paginationList.push(
-                `<li><a href="${this.setPageLink(i)}" class="page-number ${currentPageClass}">${i}</a></li>`
+                `<li class="page-number ${currentPageClass}" onclick="location.href='${this.setPageLink(i)}'">${i}</li>`
             );
         }
 
         if (this._current < this._lastPage) {
             paginationList.push(
-                `<li><a href="${this.setPageLink(this._current + 1)}"><i class="fa fa-angle-right"></i></a></li>`
+                `<li class="page-arrow" onclick="location.href='${this.setPageLink(this._current + 1)}'"><img height="11px" src="/img/common/svgs/solid/angle-right.svg"></li>`
             );
         }
 
         if (this._end < this._lastPage) {
             paginationList.push(
-                `<li><a href="${this.setPageLink(this._lastPage)}"><i class="fa fa-angle-double-right"></i></a></li>`
+                `<li class="page-arrow" onclick="location.href='${this.setPageLink(this._lastPage)}'"><img height="11px" src="/img/common/svgs/solid/angles-right.svg"></li>`
             );
         }
-        this._obj.innerHTML = `<ul></ul>`;
+        this._obj.innerHTML = `<ul class="page-list-group"></ul>`;
         let pagination = this._obj.querySelector('ul');
-        pagination.classList.add("pagination");
-        pagination.classList.add("board-pagination");
-        pagination.style.margin = "0 auto";
-        pagination.style.height = "33px";
+        pagination.classList.add("page-list-group");
         pagination.innerHTML = paginationList.join("");
     }
 }

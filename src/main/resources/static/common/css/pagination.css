@@ -1,0 +1,63 @@
+.page-list-group {
+  display: inline-block;
+  padding:0px;
+  margin:0px;
+}
+.page-list-group > li {
+  float:left;
+  padding: 6px 7px;
+  margin: 5px;
+  line-height: 19px;
+  font-size: 15px;
+  /*border:solid 1px lightgray;*/
+  border-radius: 5px;
+  height:30px;
+  width:32px;
+  text-align: center;
+  font-size:12px;
+  cursor: pointer;
+  box-shadow: 0px 1px 3px lightgray;
+}
+
+.page-list-group > li.page-number {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.page-list-group > li:hover,
+.page-list-group > li.current-page {
+  padding: 6px 7px;
+  border:solid 1px lightgray;
+}
+
+.page-list-group > li.current-page {
+  color: red;
+  font-weight: bold;
+  cursor: inherit;
+  pointer-events : none;
+}
+
+.page-list-group > li:hover:not(.current-page) {
+  color: red;
+
+  border:solid 1px lightgray;
+}
+
+.page-list-group > li.page-arrow:hover,
+.page-list-group > li.page-first:hover,
+.page-list-group > li.page-previous:hover,
+.page-list-group > li.page-next:hover,
+.page-list-group > li.page-last:hover {
+  /*padding: 5px 6px 5px 6px;*/
+  color:red;
+}
+
+.page-list-group > li.page-arrow:hover > img,
+.page-list-group > li.page-first:hover > img,
+.page-list-group > li.page-previous:hover > img,
+.page-list-group > li.page-next:hover > img,
+.page-list-group > li.page-last:hover > img {
+  filter: invert(23%) sepia(98%) saturate(7485%) hue-rotate(359deg) brightness(101%) contrast(114%);
+}
+
+

@@ -1,11 +1,8 @@
-package com.pnj.crud.repository;
+package com.pnj.crud.repository.member;
 
 import com.pnj.crud.entity.Member;
 import com.pnj.crud.entity.QMember;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

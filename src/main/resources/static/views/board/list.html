@@ -1,59 +1,148 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{views/fragments/layout}">
+<style>
+    .page-list-group {
+        display: inline-block;
+        padding:0px;
+        margin:0px;
+    }
+    .page-list-group > li {
+        float:left;
+        padding: 6px 7px;
+        margin: 5px;
+        line-height: 19px;
+        font-size: 15px;
+        /*border:solid 1px lightgray;*/
+        border-radius: 5px;
+        height:30px;
+        width:32px;
+        text-align: center;
+        font-size:12px;
+        cursor: pointer;
+        box-shadow: 0px 1px 3px lightgray;
+    }
 
+    .page-list-group > li.page-number {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .page-list-group > li:hover,
+    .page-list-group > li.current-page {
+        padding: 6px 7px;
+        border:solid 1px lightgray;
+    }
+
+    .page-list-group > li.current-page {
+        color: red;
+        font-weight: bold;
+        cursor: inherit;
+        pointer-events : none;
+    }
+
+    .page-list-group > li:hover:not(.current-page) {
+        color: red;
+
+        border:solid 1px lightgray;
+    }
+
+    .page-list-group > li.page-arrow:hover,
+    .page-list-group > li.page-first:hover,
+    .page-list-group > li.page-previous:hover,
+    .page-list-group > li.page-next:hover,
+    .page-list-group > li.page-last:hover {
+        /*padding: 5px 6px 5px 6px;*/
+        color:red;
+    }
+
+    .page-list-group > li.page-arrow:hover > img,
+    .page-list-group > li.page-first:hover > img,
+    .page-list-group > li.page-previous:hover > img,
+    .page-list-group > li.page-next:hover > img,
+    .page-list-group > li.page-last:hover > img {
+        filter: invert(23%) sepia(98%) saturate(7485%) hue-rotate(359deg) brightness(101%) contrast(114%);
+    }
+</style>
 <th:block layout:fragment="main">
     <div class="container">
         <h2>게시판</h2>
+        <form action="/board/search" method="get" class="row" role="search">
+            <input id="keyword" name="keyword" type="search" class="form-control col" placeholder="Search..." aria-label="Search"/>
+            <button type="submit" class="btn btn-primary col">검색</button>
+        </form>
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>날짜</th>
-                <th>조회수</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">번호</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">제목</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">작성자</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">날짜</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">조회수</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">delYN</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>98</td>
-                <td>누가 부트스트랩 공부한다면서요?</td>
-                <td>존 김</td>
-                <td>2019.07.05</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>100</td>
-                <td>꺼진불도 다시보자</td>
-                <td>샘 표</td>
-                <td>2019.07.05</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>101</td>
-                <td>악마의 음료 최고 레시피는?</td>
-                <td>강잔디</td>
-                <td>2019.07.05</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>102</td>
-                <td>샐러드 최대 몇접시</td>
-                <td>섭웨이</td>
-                <td>2019.07.05</td>
-                <td>2</td>
-            </tr>
             </tbody>
         </table>
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="">이전</a></li>
-                <li class="page-item"><a class="page-link" href="">1</a></li>
-                <li class="page-item"><a class="page-link" href="">2</a></li>
-                <li class="page-item"><a class="page-link" href="">3</a></li>
-                <li class="page-item"><a class="page-link" href="">다음</a></li>
-            </ul>
-        </nav>
+        <a href="/board/write" class="btn btn-primary" role="button">글 쓰기</a>
+        <div class="pageArea">
+        </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let pageNo = [[${page}]];
+        let pageSize = [[${size}]]
+        let currentPage = [[${currentPage}]]
+        /*]]>*/
+        XMLAjax(`/api/board/list`, "GET", {"page": pageNo}, (data) => {
+            let jsonData = JSON.parse(data);    // 전달된 데이터를 json으로 파싱 => javascript Object 형으로 전환
+            if (jsonData.result) {
+                let tbodyEl = document.querySelector(".table-striped tbody"); // 값을 추가할 요소 셀렉터(선택자)
+
+                // console.log(data)
+                // 전환 된 배열내 길이 만큼 루프 실행
+                jsonData.boardList.forEach((board) => {
+                    // tr 요소내 html 삽입
+                    let trTag = document.createElement("tr"); // 추가할 tr 요소 생성
+                    trTag.innerHTML = `
+                        <td><p class="mb-0 text-sm text-center">${board.bno}</p></td>
+                        <td data-b-no="${board.bno}"><a class="mb-0 text-sm">${board.btitle}</a></td>
+                        <td><p class="text-secondary mb-0 text-sm text-center">${board.bwriter}</p></td>
+                        <td><p class="text-secondary mb-0 text-sm text-center">${board.bregDate}</p></td>
+                        <td><p class="text-secondary mb-0 text-sm text-center">${board.breadCount}</p></td>
+                        <td><p class="text-secondary mb-0 text-sm text-center is_delete">${board.delYn}</p></td>
+                        `;
+                    tbodyEl.append(trTag);
+                })
+
+                /*<![CDATA[*/
+                let pagenation = new Pagination(document.querySelector(".pageArea"), pageNo, pageSize,
+                    jsonData.totalElements, 10, undefined, {}/*전달 파라미터 - 파이썬 딕셔너리 형태 동일*/);
+                /*]]>*/
+                // for (let i = 0; i < jsonData.boardList.length; i++) {
+                //     // tr 요소내 html 삽입
+                //     let trTag = document.createElement("tr"); // 추가할 tr 요소 생성
+                //     trTag.innerHTML = `
+                //     <td><p class="mb-0 text-sm text-center">${jsonData[i].bno}</p></td>
+                //     <td data-b-no="${jsonData[i].bno}"><a class="mb-0 text-sm">${jsonData[i].btitle}</a></td>
+                //     <td><p class="text-secondary mb-0 text-sm text-center">${jsonData[i].bwriter}</p></td>
+                //     <td><p class="text-secondary mb-0 text-sm text-center">${jsonData[i].bregDate}</p></td>
+                //     <td><p class="text-secondary mb-0 text-sm text-center">${jsonData[i].breadCount}</p></td>
+                //     <td><p class="text-secondary mb-0 text-sm text-center is_delete">${jsonData[i].delYn}</p></td>
+                //     `;
+                //     tbodyEl.append(trTag);
+                // }
+
+                let thTags = document.querySelectorAll("table > tbody > tr > td")
+                thTags.forEach(el => {
+                    el.addEventListener('click', () => {
+                        location.href = `/board/${el.getAttribute('data-b-no')}/detail`;
+                    })
+                })
+            }
+        })
+        // let pagenation = new Pagination(document.querySelector(".pageArea"), {현재 페이지 번호}, {한페이지 노출 갯수},
+        //     {검색 갯수}, {페이징 노출 갯수}, {url 인데 현재 페이지로 링크 할 경우 = undefined}, 전달 파라미터 - 파이썬 딕셔너리 형태 동일)
+    </script>
 </th:block>
