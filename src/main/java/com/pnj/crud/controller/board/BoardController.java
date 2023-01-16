@@ -27,6 +27,7 @@ public class BoardController {
 
     @Autowired
     public BoardController(BoardService boardService) {
+
         this.boardService = boardService;
     }
 
@@ -54,11 +55,15 @@ public class BoardController {
     public ModelAndView getBoardList(
             ModelAndView mv,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size
-            ) {
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(name = "searchType", required = false, defaultValue = "bTitleAndbContent") String searchType,
+            @RequestParam(name = "searchValue", required = false, defaultValue = "") String searchValue
+    ) {
         mv.setViewName("views/board/list");
         mv.addObject("page", page);
         mv.addObject("size", size);
+        mv.addObject("searchType", searchType);
+        mv.addObject("searchValue", searchValue);
 
 
         return mv;
@@ -80,20 +85,20 @@ public class BoardController {
 
     @GetMapping("/{bno}/detail")
     public String getBoardDetail(
-            @PathVariable("bno") Long bno,
+            @PathVariable("bno") Long bNo,
             Model model
     ) {
-        model.addAttribute("board", boardService.findById(bno));
+        model.addAttribute("board", boardService.findById(bNo));
 
         return "views/board/detail";
     }
 
-    @GetMapping("/{bno}/modify")
+    @GetMapping("/{bNo}/modify")
     public String getBoardModify(
-            @PathVariable("bno") Long bno,
+            @PathVariable("bNo") Long bNo,
             Model model
     ) {
-        model.addAttribute("board", boardService.findById(bno));
+        model.addAttribute("board", boardService.findById(bNo));
 
         return "views/board/modify";
     }
@@ -105,6 +110,20 @@ public class BoardController {
         return "views/board/list";
     }
 
+    @GetMapping("/{bNo}/reWrite")
+    public String getReWrite() {
 
+        return "views/board/reWrite";
+    }
 
+    @PostMapping("/{bno}/reWrite")
+    public String postReWrite(
+            BoardSaveRequestDto boardDto,
+            @PathVariable("bno") Long bNo
+    ) {
+
+        boardService.saveReWrite(boardDto, bNo);
+
+        return "views/board/list";
+    }
 }

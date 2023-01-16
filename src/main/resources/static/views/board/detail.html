@@ -41,7 +41,7 @@
             <a class="btn btn-danger text-light me-2" id="modify-btn" th:href="${'/board/'+board.bNo+'/modify'}">글 수정</a>
             <a th:if="${board.bNo != board.bRef}" class="btn btn-secondary text-light me-2"
                th:href="${'/board/'+board.bRef+'/detail'}">원글보기</a>
-            <a class="btn btn-success text-light me-2" href="/board/list">답글쓰기</a>
+            <a class="btn btn-success text-light me-2" th:href="${'/board/'+board.bNo+'/reWrite'}">답글쓰기</a>
             <!--            <button type="submit" class="btn btn-primary">글 등록</button>-->
         </div>
         <!--    댓글    -->

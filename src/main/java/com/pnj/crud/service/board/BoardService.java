@@ -15,5 +15,7 @@ public interface BoardService {
 
     Object findById(Long bno);
 
-    Page<Board> findAllPost(Pageable pageable);
+    Page<Board> findAllPost(Pageable pageable, String searchType, String searchValue);
+
+    Long saveReWrite(BoardSaveRequestDto boardDto, Long bNo);
 }

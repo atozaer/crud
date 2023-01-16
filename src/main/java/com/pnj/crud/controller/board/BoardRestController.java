@@ -2,11 +2,13 @@ package com.pnj.crud.controller.board;
 
 import com.pnj.crud.entity.Board;
 import com.pnj.crud.service.board.BoardService;
+import javassist.compiler.ast.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,12 +33,16 @@ public class BoardRestController {
     @GetMapping("/list")
     public Map<String, Object> getBoardList(
             @PageableDefault(size = 10, sort = "bRef", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(name="pageNo", required=false, defaultValue = "1") int pageNo
-    ) {
 
+            @RequestParam(name="searchType") String searchType,
+            @RequestParam(name="searchValue") String searchValue
+//            @RequestParam(name="page", required=false, defaultValue = "1") int page
+    ) {
+        System.out.println(searchType);
+        System.out.println(searchValue);
         Map<String, Object> result = new HashMap<>();
         pageable = pageable.withPage(pageable.getPageNumber() - 1);
-        Page<Board> boardPage = boardService.findAllPost(pageable);
+        Page<Board> boardPage = boardService.findAllPost(pageable, searchType, searchValue);
 
         int pageNumber = pageable.getPageNumber() + 1;
         int startPage = ((pageNumber - 1)   / pageable.getPageSize()) * pageable.getPageSize();
@@ -57,6 +63,8 @@ public class BoardRestController {
             result.put("PageSize", pageable.getPageSize());
             result.put("currentPage", pageable.getPageNumber());
             result.put("endPage", endPage);
+            result.put("searchType", searchType);
+            result.put("searchValue", searchValue);
         }
         else {
             result.put("result", false);
